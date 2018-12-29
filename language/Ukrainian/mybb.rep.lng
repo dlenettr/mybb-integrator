@@ -1,0 +1,21 @@
+<?php
+/*
+=====================================================
+ MWS MyBB Integrator v1.4.1 - by MaRZoCHi (MWS) 
+-----------------------------------------------------
+ http://www.marzochi.ws/
+-----------------------------------------------------
+ Copyright (c) 2013 MaRZoCHi.WS
+=====================================================
+*/
+
+$messages = array(
+	'0'	=> "Giriş yapmamış kullanıcılar bu sistemi kullanamaz!",
+	'1'	=> "Kullanıcı grubunuz izinsiz",
+	'2'	=> "POST edilen veriler yetersiz",
+	'3'	=> "Lütfen aşağıdaki hataları giderin :",
+	'4'	=> "Kullanıcı kendine rep veremez",
+	'5'	=> "Daha önce buradan rep vermişsiniz",
+	'6'	=> "Günlük REP verme limitini aştınız",
+);
+?>

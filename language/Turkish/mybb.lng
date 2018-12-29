@@ -1,0 +1,220 @@
+<?php
+/*
+=====================================================
+ Modül Adı : MyBB Integrator v1.4.3
+ Yapımcı   : Mehmet Hanoğlu ( MaRZoCHi )
+ Site      : http://dle.net.tr/ (c) 2015
+ Tarih     : 21.06.2015
+ Lisans    : GNU License
+=====================================================
+*/
+
+$lang = array_merge($lang, array (
+
+'mws_translator_name'		=>	"MaRZoCHi (Mehmet Hanoğlu)",
+'mws_translator_mail'		=>	"m.hanoglu55@gmail.com",
+'mws_translator_site'		=>	"dle.net.tr",
+'mws_mybbint_vid'			=>	"1.4.2",
+'mws_mybbint_date'			=>	"08.07.2014",
+'mws_install_inf'			=>	"Datalife Engine ve MyBB Entegrasyonu",
+
+'mws_author'				=>	"Yapımcı",
+'mws_reldate'				=>	"Çıkış Tarihi",
+'mws_atinstall'				=>	"Kurulumda",
+'mws_install'				=>	"Yükle",
+'mws_sources'				=>	"Kullanılan materyal kaynakları",
+'mws_adminicon'				=>	"Admin Panel İkonları",
+'mws_iwarning1'				=>	"Kuruluma başlamadan önce olası hatalara karşı veritabanınızı yedekleyin",
+'mws_iwarning2'				=>	"Kurulumdan hemen sonra <u>install_mybbint.php</u> dosyasını silin.",
+'mws_iwarning3'				=>	"Eğer herşeyin tamam olduğuna eminseniz <font color=\"#51A351\"><b>Yükle</b></font> butonuna basabilirsiniz.",
+'mws_password'				=>	"Şifre",
+'mws_user_id'				=>	"Kullanıcı ID'si",
+'mws_user_name'				=>	"Kullanıcı Adı",
+'mws_user_email'			=>	"Kullanıcı E-Mail'i",
+'mws_user_group'			=>	"Kullanıcı Grubu",
+'mws_reg_date'				=>	"Kayıt Tarihi",
+'mws_reg_ip'				=>	"Kayıt IP",
+
+'mws_status'				=>	"Durum",
+'mws_avatar'				=>	"Avatar",
+'mws_suc_transfer'			=>	"Kullanıcılar başarıyla aktarıldı.",
+'mws_f_install'				=>	"Kurulumu Bitir",
+'mws_fd_install'			=>	"Kurulum Bitti",
+'mws_suc_install'			=>	"Tebrikler, başarıyla kurulum yaptınız.",
+'mws_s_install'				=>	"Kuruluma Başla",
+'mws_nec_info'				=>	"Gerekli bilgilere bu sayfadan ulaşabilirsiniz",
+'mws_check_files'			=>	"Kuruluma başlamadan önce gerekli dosyaları attığınızdan emin olun",
+'mws_mail_notify'			=>  "<font color=\"#ff0000\">Sorunlarınızı</font> sitemizin ticket, forum sistemini kullanarak bildirebilirsiniz",
+'mws_client_info'			=>	"<b>Sadece müşterilerimizin</b> sorunlarını paylaşabileceği <b>özel forum</b>'a girerek sorunlarınızı,şikayetlerinizi,fikirlerinizi bizimle paylaşabilirsiniz.",
+'mws_client_forum'			=>	"Bu forumu sadece müşteriler görebilir",
+'mws_special_sforum'		=>	"<b>Özel Destek Forum</b></a>'una girmek için linke tıklayın",
+'mws_import_to_mybb'		=>  "Üyeleri MyBB'ye Aktar",
+
+// New in 1.4.1
+'mws_noauth'				=>  "Yetkilendirme Hatası!",
+'mws_noauth_text'			=>  "Kuruluma başlayabilmek için giriş yapmalısınız.Eğer giriş yaptıysanız bu işlem için yetkiniz yok demektir.",
+'mws_autoset'				=>  "Otomatik Ayarlar",
+'mws_autoset_info'			=>  "Avatar boyutu, cookie dizini ve forum url'sini otomatik olarak MyBB ayarlarınızdan okur",
+'mws_activate_mod'			=>  "Modülü aktifleştir",
+'mws_activate_info'			=>  "Modülü kullanabilmek ve ayarlamalar yapabilmeniz için aktifleştirmeniz gerekir",
+// New in 1.4.1
+
+// Navigasyon
+'mws_home_page'				=>	"Ana Sayfa",
+'mws_int_set'				=>	"Entegrasyon Ayarları",
+'mws_int_set_info'			=>	"Entegrasyon için uygulayabileceğiniz temel ayarlar",
+'mws_module_set'			=>	"Forum Modül Ayarları",
+'mws_module_set_info'		=>	"Entegrasyon için hazırlanmış olan modüllerin ayarları",
+'mws_operation_set'			=>	"Entegrasyon İşlemleri",
+'mws_operation_set_info'	=>	"Önbellek temizleme, yeniden oluşturma...",
+
+
+'mws_general_set'			=>	"Genel Ayarlar",
+'mws_other_set'				=>	"Diğer Ayarlar",
+'mws_category_set'			=>	"Kategori Ayarları",
+'mws_group_set'				=>	"Üye Gurubu Ayarları",
+'mws_module_set'			=>	"Modül Ayarları",
+'mws_fmodule_set'			=>	"Forum Modül Ayarları",
+
+// Genel Ayarlar
+'mws_forum_index'			=>	"Forumun kuruluğu olduğu dizin",
+'mws_forum_index_info'		=>	"Forumunuzun dizini www/ klasörü içindeki adı. <b>www/forum</b> için <b>/forum</b> giriniz.",
+'mws_forum_acp'				=>	"Admin klasörü",
+'mws_forum_acp_info'		=>	"Forumunuzun admin panelinin dizini. <b>/forum/admin</b> için <b>/admin</b> giriniz",
+'mws_subdomain'				=>	"Subdomain kullanımı",
+'mws_subdomain_info'		=>	"Örnek: <b>forum</b>.siteniz.com şeklindeki url için <b>forum</b> giriniz.",
+'mws_forum_url'				=>	"Forum URL Adresi",
+'mws_forum_url_info'		=>	"Linklerde kullanılacak olan URL adresidir, doğru yazmaya özen gösterin.Sonu <b>/</b> ile bitmelidir.",
+'mws_fcookiep'				=>	"Forum ile ilgili COOKIE yolları",
+'mws_fcookiep_info'			=>	"Örnek: \"www.siteniz.com/<b>forum</b>/\" için \"/<b>forum</b>/\" -- Eğer <u>subdomain kullanıyorsanız</u> <b>/</b> giriniz.",
+'mws_acookiep_info'			=>	"Örnek: \"www.siteniz.com/<b>forum/admin</b>/\" için \"/<b>forum/admin</b>/\" -- Eğer <u>subdomain kullanıyorsanız</u> <b>/admin/</b> giriniz.",
+'mws_thread_cont'			=>	"Foruma eklenecek konunun içeriği",
+'mws_thread_cont_info'		=>	"Portaldan eklediğiniz konunun, kısa açıklama ya da tam açıklama kısımlarıdan hangisi foruma eklesin",
+'mws_short_story'			=>	"Kısa Açıklama",
+'mws_full_story'			=>	"Tam Açıklama",
+'mws_f_online'				=>	"Üye olan kullanıcının forumda online olması",
+'mws_f_online_info'			=>	"Üye olan kullanıcılar, üyelik işlemi bittiğinde otomatik olarak foruma da giriş yapmış sayılırlar",
+'mws_login_admin'			=>	"Forum Admin paneline giriş",
+'mws_login_admin_info'		=>	"Admin grubunda olan kullanıcılar,giriş yaptıklarında otomatik olarak MyBB admin paneline giriş yapmış sayılırlar",
+'mws_usecookie'				=>	"COOKIE zaman aşımı",
+'mws_usecookie_info'		=>	"Giriş esnasında oluşturulan cookie(çerez)lerin kaç <b>gün</b> saklanacağı",
+'mws_license'				=>	"Lisans anahtarı",
+'mws_license_info'			=>	"Modül yapımcısı tarafından verilen lisans kodu",
+
+
+// Diğer Ayarlar
+'mws_avatar'				=>	"Varsayılan forum avatar boyutları (px) x (px)",
+'mws_avatar_info'			=>	"Foruma aktarılacak kullanıcının avatar boyutları, forumdaki avatarlar girilen boyutta gözükecektir. (<b>Genişlik</b> x <b>Yükseklik</b>)",
+'mws_defuser'				=>	"Yeni kullanıcı seçenekleri",
+'mws_defuser_info'			=>	"Kayıt olan kullanıcıların forum için varsayılan ayarları",
+'mws_defuser_1'				=>	"Avatarları göster",
+'mws_defuser_2'				=>	"İmzaları göster",
+'mws_defuser_3'				=>	"Yönlendirme sayfalarını göster",
+'mws_defuser_4'				=>	"Hızlı cevap panelini göster",
+'mws_deluser'				=>	"Kullanıcı mesajları silme",
+'mws_deluser_info'			=>	"Silinecek kullanıcının forum yazdığı tüm mesajlar da silinsin mi?",
+'mws_deftopic'				=>	"Yeni konu seçenekleri",
+'mws_deftopic_info'			=>	"Portaldan foruma otomatik olarak eklenen konular için ayarlar",
+'mws_deftopic_1'			=>	"Görünür (Herkese Açık)",
+'mws_deftopic_2'			=>	"Smilleri gösterme",
+'mws_deftopic_3'			=>	"İmzayı göster",
+'mws_mwshidden'				=>	"DLE [hide][/hide] Etiketi",
+'mws_mwshidden_info'		=>	"Eğer MyBB için {link} kullanıyorsanız bu seçeneği aktifleştirerek forumda da gizleme fonksiyonunun dahil olmasını sağlayabilirsiniz",
+'mws_repltext'				=>	"Bul ve değiştir",
+'mws_repltext_info'			=>	"Foruma eklenecek konu için uygulanacak olan değişiklikler",
+'mws_repltext_hint'			=>	"Her satıra bir yazım gelecek şekilde girin.<br /><b>Örnek :</b><br />:wink:=>[img]http://siteniz.com/resim.png[/img]",
+'mws_newstag'				=>	"Konu ekleme etiketi",
+'mws_newstag_info'			=>	"Foruma eklenen konuya, DLE üzerinden eklendiğini belirten uyarı yazısı",
+'mws_mapforum'				=>	"Forum - Site Haritası",
+'mws_mapforum_info'			=>	"Seçeceğiniz belli forumlar için otomatik olarak site haritası oluşturabilirsiniz",
+'mws_forum_newspre'			=>	"Konu başlığı öneki",
+'mws_forum_newspre_info'	=>	"Foruma eklenecek konu içi önek girebilirsiniz, böylece konunun DLE'den eklendiği belli olur",
+
+
+// Kategori Ayarları
+'mws_convers_f'				=>	"Karşılığı olan MyBB forumu",
+
+// Grup Ayarları
+'mws_convers_g'				=>	"Karşılığı olan MyBB kullanıcı grubu",
+
+// Uyarılar
+'mws_att_group'				=>	"Konu ekleme ayarlarında, sistemler arası grup senkronizasyonu orjinal halinde, düzenleme yapmak için <b>Entegrasyon Ayarları >> Üye Gurubu Ayarları</b> adımlarını takip edin.",
+'mws_att_category'			=>	"Konu ekleme ayarlarında, sistemler arası kategori-forum orjinal halinde, düzenleme yapmak için <b>Entegrasyon Ayarları >> Kategori Ayarları</b> adımlarını takip edin.",
+'mws_att_admin'				=>	"Admin kullanıcı grubundaki kullanıcılar, MyBB admin paneline girmek için giriş yapmak zorundalar.Otomatik olarak giriş yapmaları için <b>Entegrasyon Ayarları >> Genel Ayarlar >> Forum Admin paneline giriş >> Evet</b> olarak seçin.",
+'mws_no_att'				=>	"Herhangi bir uyarı bulunmuyor, sisteminiz düzgün çalışıyor...",
+
+// İşlemler
+'mws_posts_num'				=>	"Mesaj sayısı",
+'mws_threads_num'			=>	"Konu sayısı",
+'mws_users_num'				=>	"Kullanıcı sayısı",
+'mws_sess_tails'			=>	"SESSION kalıntıları",
+'mws_cache_where'			=>	"(<font color='gray'><i>Anasayfa - Forum istatikleri Bölümü</i></font>)",
+'mws_refresh_dcache_info'	=>	"Forumda gönderilen konu,mesaj ve toplam kullancı sayısını günceller,forum istatistiklerinde doğru sonuçları görmüş olursunuz",
+'mws_datacache_updated'		=>	"Veri Önbelleği güncellendi",
+'mws_refresh_dcache'		=>	"Önbelleği Güncelle",
+'mws_conver_users_info'		=>	"Üyeler için sonradan ayarlama yaptıysanız, yeni ayarlarınız ile üyelerinizi foruma tekrar aktarabilirsiniz...",
+'mws_current_set'			=>	"Geçerli Ayarlarınız :",
+'mws_convert_users'			=>	"Üyeleri Aktar",
+
+
+// Ana Sayfa
+'mws_mybb_version'			=>	"MyBB Sürümü",
+'mws_lang_support'			=>	"Mevcut Dil Desteği",
+'mws_int_version'			=>	"Entegrasyon Sürümü",
+'mws_attentions'			=>	"Uyarılar",
+'mws_module_page'			=>	"Modül Sayfası",
+'mws_warnings_label'		=>	"Modülün düzgün çalışması için aşağıdaki sorun(ları) giderin",
+
+// Install
+'mws_use_current_set'		=>	"Geçerli ayarlarınız ile işlem yapılacak",
+
+// Module ID:0
+'mws_0_name'				=>	"Tablo İstatistikler",
+'mws_0_set1'				=>	"Başlık karakteri limiti",
+'mws_0_set1_info'			=>	"Başlıklar için karakter sınırlaması, girdiğiniz değerden uzun olan başlıklar otomatik olarak kısaltılacaktır",
+'mws_0_set2'				=>	"Kullanıcı adı limiti",
+'mws_0_set2_info'			=>	"Kullanıcı adı için karakter sınırlaması, girdiğiniz değerden uzun olan başlıklar otomatik olarak kısaltılacaktır",
+'mws_0_set3'				=>	"Son x mesajı göster",
+'mws_0_set3_info'			=>	"Tabloda gösterilecek son mesaj sayısının adedini girin",
+'mws_0_set4'				=>	"Tarih formatı",
+'mws_0_set4_info'			=>	"Mesaj tarihleri için gösterilen tarihi uygun formatta yazın",
+'mws_0_set5'				=>	"Önbellek kullanımı",
+'mws_0_set5_info'			=>	"Önbellek sistemini kullanarak sürekli olarak veritabanından veri çekmek yerine dosya belleği kullanılır",
+'mws_0_set6'				=>	"MyBB SEO plugini",
+'mws_0_set6_info'			=>	"Gösterilen mesaj linkleri bu plugine bağlı olarak farklılık gösterir.Yanlış seçim yaparsanız mesaj linklerine tıklandığında hata alırsınız",
+'mws_0_set7'				=>	"Tabloya dahil olmayan forumlar",
+'mws_0_set7_info'			=>	"Bazı forumların son mesajlarının tabloda gözekmesini istemiyorsanız, forum id lerini virgül ile ayırarak giriniz.",
+'mws_0_set8'				=>	"Son mesaj linki",
+'mws_0_set8_info'			=>	"Gösterilen mesaj linklerine tıkladığında nereye gideceği",
+'mws_0_set9'				=>	"Popup kullanıcı linki",
+'mws_0_set9_info'			=>	"Son mesajı yazan kullanıcın linkine tıklandığında profili popup ile gösterilsin mi?",
+'mws_0_sets1'				=>	"Sistem tercihi",
+'mws_0_sets2'				=>	"Konudaki ilk mesaja git",
+'mws_0_sets3'				=>	"Son mesaja git",
+'mws_0_set10'				=>	"Forum İsimleri",
+'mws_0_set10_info'			=>	"Forum isimleri link olarak gösterilsin mi?",
+'mws_0_set11'				=>	"Forum Linkleri",
+'mws_0_set11_info'			=>	"Eğer yukarıdaki ayarı aktifleştirdiyseniz, gösterilecek linkler'e nofollow eklensin mi?",
+// New in 1.4.1
+'mws_0_set12'				=>	"Konu önekleri",
+'mws_0_set12_info'			=>	"Son konularda, konu öneklerini göstermek için bu ayarı aktifleştirin",
+// New in 1.4.1
+
+
+
+// Module ID:1 (New in 1.4.1)
+'mws_1_name'				=>	"Rep Modülü",
+'mws_1_set1'				=>	"Kendine REP verme",
+'mws_1_set1_info'			=>	"Kullanıcı kendine REP verebilir",
+'mws_1_set2'				=>	"REP Değeri",
+'mws_1_set2_info'			=>	"Verilecek REP&#39;in değerini girin (+1)",
+'mws_1_set3'				=>	"Çoklu REP",
+'mws_1_set3_info'			=>	"Bir kullanıcı ya aynı mesaj, yorum için birden çok REP verme hakkı",
+'mws_1_set4'				=>	"REP Yorumu karakter limiti",
+'mws_1_set4_info'			=>	"REP veren kullanıcının yazacağı yorum için karakter limiti",
+'mws_1_set5'				=>	"Günlük REP Kullanma limiti",
+'mws_1_set5_info'			=>	"Kullanıcın, bir günde verebileceği REP miktarı",
+'mws_1_set6'				=>	"İzin verilen gruplar",
+'mws_1_set6_info'			=>	"REP Sistemini kullanabiliecek olan gruplar",
+));
+?>

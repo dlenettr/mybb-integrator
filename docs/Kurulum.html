@@ -1,0 +1,192 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="tr" lang="tr">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>DLE + MyBB Integrator</title>
+	<script type="text/javascript" src="_files/scripts/shCore.js"></script>
+	<script type="text/javascript" src="_files/scripts/shBrushPhp.js"></script>
+	<script type="text/javascript" src="_files/scripts/shBrushPlain.js"></script>
+	<link type="text/css" rel="stylesheet" href="_files/styles/shCore.css"/>
+	<link type="text/css" rel="stylesheet" href="_files/styles/shThemeDefault.css"/>
+	<script type="text/javascript">
+		SyntaxHighlighter.config.clipboardSwf = '_files/scripts/clipboard.swf';
+		SyntaxHighlighter.config.stripBrs = true;
+		SyntaxHighlighter.defaults['auto-links'] = false;
+		SyntaxHighlighter.defaults['smart-tabs'] = false;
+		SyntaxHighlighter.defaults['tab-size'] = 4;
+		SyntaxHighlighter.all();
+	</script>
+</head>
+
+<body style="background: white; font-family: Lucida Console; font-size:13px;">
+<h1>DLE + MyBB Integrator v.1.4.3 - Kurulum</h1>
+
+<p><strong>Yapımcı:</strong> MaRZoCHi (<a href="http://forum.dle.net.tr/datalife-engine/modul/138-mybb-integrator-destek-support.html">marzochi.ws</a>)</p>
+<p><strong>Modül sayfası:</strong> <a href="http://forum.dle.net.tr/datalife-engine/modul/138-mybb-integrator-destek-support.html">MyBB ve Datalife Engine Entegrasyonu</a></p>
+<p><b>Uyumlu versiyonlar</b> : DLE 10.x ve MyBB 1.6.x, 1.7.x (1.8 Alpha/Beta) (<i>Kodlama : UTF-8</i>)</p>
+
+<div class="info">
+	<b>Kuruluma başlamadan önce :</b>
+	<ul>
+		<li>Datalife Engine'ın kurulu olduğu dizinde <b>forum</b> adında bir klasör açın.</li>
+		<li>Eğer forumunuzu /forum dışında bir isimle klasöre kurduysanız "engine/data/mybb.conf.php" dosyasını açarak "/forum" yerine kurduğunuz klasörün adını yazınız</li>
+		<li>Sistemleri <b>farklı</b> veritabanlarına kurmanız yararlı olacaktır.</li>
+		<li>MyBB dosyalarını, oluşturduğunuz <b>/forum</b> klasörüne atın ve MyBB kurulumunu yapın (Eğer DLE kurulu değil ise ilk olarak DLE'yi kurun)</li>
+		<li>Sistem dosyaları otomatik olarak düzenlenecektir. Eğer hata alırsanız: Ana dizindeki <b>/install</b> ve alt klasörlerini CHMOD 777 olarak ayarlayın</li>
+		<li>Değişen tüm sistem dosyaları <b>/install/backup</b> dizininde bir zip dosyası olarak saklanacaktır. Olası geri dönüş isteklerinde ve modül kaldırma işlemlerinde kullanabilirsiniz.</li>
+		<li>Eğer yine kurulumda hata alıyorsanız: Arşivde bulunan düzenlenmiş dosyaları sunucunuza atın ve <b>/install</b> klasörü ve <b>install_module.php</b> dosyasını silin.</li>
+	</ul>
+</div>
+
+
+
+
+<h2>Düzenleme : DLE Tema Dosyaları</h2>
+
+<p class="file">Geçerli temanızda...<font color="#FF0000"><strong>addnews.tpl</font></strong>'yi açın.Size uygun bir yere ekleyin</p>
+<pre class="brush: php;">
+&#60;input type="checkbox" name="add_to_forum" id="add_to_forum" value="1" checked="checked" />&nbsp;&#60;label for="add_to_forum">Forum'a da Ekle&#60;/label>
+</pre>
+
+<p class="sep">
+
+<p class="file">Geçerli temanızda...<font color="#FF0000"><strong>userinfo.tpl</font></strong>'yi açın, Aşağıda belirtilen kodları uygun gördüğünüz bir yere ekleyebilirsiniz</p>
+
+<pre class="brush: php;">
+	Forum Konuları :{forum-threads}
+	Forum Mesajları : forum-posts}
+	Rep Puanı : {reputations}
+</pre>
+
+
+<h2>Kurulum : Tablo İstatistikler Modülü</h2>
+
+Stil kodlarını temanızda çalışan bir .css dosyasına ekleyebilirsiniz
+<pre class="brush: php;">
+ #mybb-last-posts {
+	background: #fff;
+	width: 790px;
+	border-collapse: collapse;
+	text-align: left;
+	background: url('../images/forum-image.png') 660px 95px no-repeat ;
+}
+#mybb-last-posts thead {
+	font-weight: normal;
+	color: #099;
+	padding: 5px 3px;
+	border-bottom: 4px solid #68A719;
+}
+
+#mybb-last-posts td {
+	border-bottom: 1px solid #ccc;
+	color: #666;
+	padding: 5px 3px;
+}
+#mybb-last-posts td a {
+	color: #669;
+}
+#mybb-last-posts tbody tr:hover  td {
+	color: #000;
+}
+
+#mybb-last-posts tbody tr:hover  td a {
+	color: #009;
+	text-decoration:none;
+}
+</pre>
+
+<p class="sep">
+
+<p class="file"><font color="#FF0000"><strong>Önerilen yer</strong></font> : <b>{info}</b> tagının üstüne...Sadece ana sayfada gözükmesini isterseniz <b>[aviable=main] [/aviable]</b> tagları arasına yerlşetirmelisiniz.</p>
+
+<pre class="brush: php;">
+{include file="engine/modules/mybb-stats.php"}
+</pre>
+
+
+
+<h2>Kurulum : Rep Modülü</h2>
+
+Stil kodlarını temanızda çalışan bir .css dosyasına ekleyebilirsiniz
+
+<pre class="brush: php;">
+/* ----------- MWS BUTTONS ------------------ */
+.mwsrep, .mwsrep:visited, .tab.mwsrep 	{ background: #222; display: inline-block !important; padding: 3px 5px 3px !important; color: #fff !important; text-decoration: none !important; font-size: 11px !important; font-weight: bold !important; line-height: 1 !important; -moz-border-radius: 3px !important;  -webkit-border-radius: 3px !important; border-radius: 3px !important; position: relative !important; cursor: pointer !important;}
+.tab.mwsrep								{ color: #222 !important; border:1px solid #000; padding: 2px 5px 2px !important; cursor: default !important;}
+.mwsrep:hover							{ background-color: #111 !important;}
+.plus.mwsrep, .plus.mwsrep:visited		{ background-color: #98BA6C !important;} /* + butonu arkaplanı */
+.minus.mwsrep, .minus.mwsrep:visited	{ background-color: #D17975 !important;} /* - butonu arkaplanı */
+.tab.mwsrep, .tab.mwsrep:visited		{ background-color: #fff !important;} /* rep puanı arkaplanı */
+.tab.mwsrep:hover						{ background-color: #fff !important;} /* rep puanı arkaplanı (üzerine gelince) */
+.plus.mwsrep:hover						{ background-color: #91bd09 !important;} /* rep puanı arkaplanı (üzerine gelince) */
+.minus.mwsrep:hover						{ background-color: #e33100 !important;} /* rep puanı arkaplanı (üzerine gelince) */
+/* ----------- MWS BUTTONS ------------------ */
+</pre>
+
+<p class="file"><strong>1. Aç - <font color="#FF0000">engine/classes/js/dle_js.js</font></strong></p>
+
+<b>En Altına Ekle : </b>
+<pre class="brush: php;">
+function MWSRep( uid, action, local ) {
+	var b = {};
+	b[dle_act_lang[3]] = function() { $(this).dialog('close'); };
+	b[dle_p_send] = function() {
+		if ( &#36;('#dle-promt-text').val().length < 1) &#36;('#dle-promt-text').addClass('ui-state-error');
+		else {
+			var response = $('#dle-promt-text').val();$(this).dialog('close');
+			$('#dlepopup').remove();ShowLoading();
+			$.post(dle_root + 'engine/ajax/mybb.rep.php', { uid: uid, action: action, text: response, local: local },
+				function(data){
+					if (data == 'ok') {
+						var rep = parseInt( $("#t_" + uid).text() );
+						if (action == 'm') $("#t_" + uid).text(rep - 1);
+						else $("#t_" + uid).text(rep + 1);
+					} else DLEalert(data, dle_info);
+				}
+			);HideLoading();
+		}
+	};$('#dlepopup').remove();
+	$('body').append("&#60div id='dlepopup' title='Rep için yorum giriniz' style='display:none'>&#60br />&#60textarea name='dle-promt-text' id='dle-promt-text' class='ui-widget-content ui-corner-all' style='width:99%;height:75px; padding: 0.1em;'>&#60/textarea>&#60/div>");
+	&#36;('#dlepopup').dialog({ autoOpen: true, width: 480, dialogClass: "modalfixed", buttons: b });
+	&#36;('.modalfixed.ui-dialog').css({position:"fixed"});
+	&#36;('#dlepopup').dialog( "option", "position", ['0','0'] );
+};
+</pre>
+
+<p class="file">Geçerli temanızda...<font color="#FF0000"><strong>userinfo.tpl</font></strong>'yi açın, Aşağıda belirtilen kodları uygun gördüğünüz bir yere ekleyebilirsiniz</p>
+
+<pre class="brush: php;">
+{include file="engine/modules/mybb-rep.php?uid=1&loc=u{usertitle}"}
+</pre>
+
+<div class="error">
+	<b>Eğer forumdaki kullanıcı linkine tıklandığında portala yönlendirmek isterseniz</b>
+	<p class="file"><strong>4. Aç - <font color="#FF0000">forum/member.php</font></strong></p>
+	<b>Bul : </b>
+	<pre class="brush: php;">$parser = new postParser;</pre>
+	<p><b>Altına Ekle (siteniz.com yerine sitenizin adresini yazın) : </b></p>
+	<pre class="brush: php;">
+	$query = $db->simple_select("users", "uid,username", "uid='".intval($mybb->input['uid'])."'");
+	$row = $db->fetch_array($query);
+	header("Location: http://www.siteniz.com/user/{$row['username']}/");
+	/*
+	</pre>
+	<b>Dosyanın en altında <fon color="red">?></font> den önce ekleyin</b>
+	<pre class="brush: php;">&nbsp;&#42;&#47; </pre>
+</div>
+
+<div class="info">
+	<b>Kurulum bittikten sonra :</b>
+	<ul>
+		<li>Forum ayarlarını burada anlatıldığı gibi yapın.(<a href="http://www.marzochi.ws/dle-mybb-entegrasyon-ayarlari.html" target="_blank">Nasıl olmalıdır?</a>)</li>
+		<li>Değişen tüm sistem dosyaları <b>/install/backup</b> dizininde bir zip dosyası olarak saklanacaktır. Olası geri dönüş isteklerinde ve modül kaldırma işlemlerinde kullanabilirsiniz.</li>
+		<li>Gerekli tüm ayarlamaları admin panelinize girerek yaptıktan sonra, Entegrasyon işlemlerine tıklayarak üyelerinizi foruma da aktarabilirsiniz.</li>
+	</ul>
+</div>
+
+<div class="succes">
+<b>Forum Destek : </b><br />
+&nbsp;&nbsp;&nbsp;<font color="#6a91d4"><a href="http://forum.dle.net.tr/datalife-engine/modul/138-mybb-integrator-destek-support.html">DLE - MyBB Integrator</a></font> (Sadece Müşteriler İçindir)<br />
+<p>&copy; 2011-2012 <a href="http://dle.net.tr">DLE.NET.TR</a></p>
+</div>
+</html>

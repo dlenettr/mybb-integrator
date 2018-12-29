@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+	<id>MyBB Integrator</id>
+	<version>1.4.3</version>
+	<vqmver>2.4.1</vqmver>
+	<author>MaRZoCHi</author>
+	<file name="engine/modules/register.php">
+		<operation>
+			<ignoreif><![CDATA[$mybb->update_avatar]]></ignoreif>
+			<search position="after"><![CDATA[$foto_name = "foto_" . $row['user_id'] . "." . $type;]]></search>
+			<add><![CDATA[
+// DLE - MyBB
+						require_once ENGINE_DIR . "/classes/mybb.class.php";
+						$mybb->update_avatar( "{$config['http_home_url']}uploads/fotos/{$foto_name}", $row['user_id'] );
+// DLE - MyBB]]></add>
+		</operation>
+		<operation>
+			<ignoreif><![CDATA[$mybb->update_user]]></ignoreif>
+			<search position="before"><![CDATA[msgbox( $lang['reg_ok'], $lang['reg_ok_1'] );]]></search>
+			<add><![CDATA[
+// DLE - MyBB
+		if (!empty($fullname)) {
+			require_once ENGINE_DIR . '/classes/mybb.class.php';
+			$mybb->update_user(
+				array( 'usertitle' => $fullname ), $row['user_id'], $self = False, $admin = False
+			);
+		}
+// DLE - MyBB]]></add>
+		</operation>
+		<operation>
+			<ignoreif><![CDATA[$mybb->add_user]]></ignoreif>
+			<search position="after"><![CDATA[$id = $db->insert_id();]]></search>
+			<add><![CDATA[
+// DLE - MyBB
+			require_once ENGINE_DIR . '/classes/mybb.class.php';
+			$user_array = array(
+				'uid'              	=> $id,
+				'username'			=> $name,
+				'regpass'			=> $user_arr[2],
+				'email' 			=> $email,
+				'regdate' 			=> $add_time,
+				'lastvisit' 		=> $add_time,
+				'usergroup'		 	=> $config['reg_group'],
+				'regip' 			=> $_IP,
+				'avatar'			=> $config['http_home_url']."templates/".$config['skin']."/dleimages/noavatar.png",
+			);
+			$mybb->add_user($user_array, $count = True, $login = True, $self = False);
+			unset($user_array);
+// DLE - MyBB]]></add>
+		</operation>
+	</file>
+	<file name="engine/modules/profile.php">
+		<operation>
+			<ignoreif><![CDATA[// DLE - MyBB - Avatar 1]]></ignoreif>
+			<search position="after"><![CDATA[$db->query( "UPDATE " . USERPREFIX . "_users SET foto='{$gravatar}' WHERE user_id = '{$id}'" );]]></search>
+			<add><![CDATA[
+				// DLE - MyBB - Avatar 1
+				require_once ENGINE_DIR . '/classes/mybb.class.php';
+				$mybb->update_avatar( $gravatar, $id );
+				// DLE - MyBB - Avatar 1
+]]></add>
+		</operation>
+		<operation>
+			<ignoreif><![CDATA[// DLE - MyBB - Avatar 2]]></ignoreif>
+			<search position="replace"><![CDATA[else $db->query( "UPDATE " . USERPREFIX . "_users set foto='' WHERE user_id = '{$id}'" );]]></search>
+			<add><![CDATA[
+				// DLE - MyBB - Avatar 2
+				require_once ENGINE_DIR . '/classes/mybb.class.php';
+				$mybb->update_avatar( "", $id );
+				// DLE - MyBB - Avatar 2
+]]></add>
+		</operation>
+		<operation>
+			<ignoreif><![CDATA[// DLE - MyBB - Avatar 3]]></ignoreif>
+			<search position="replace"><![CDATA[$db->query( "UPDATE " . USERPREFIX . "_users SET foto='' WHERE user_id = '{$id}'" );]]></search>
+			<add><![CDATA[
+{
+				$db->query( "UPDATE " . USERPREFIX . "_users SET foto='' WHERE user_id = '{$id}'" );
+				// DLE - MyBB - Avatar 3
+				require_once ENGINE_DIR . '/classes/mybb.class.php';
+				$mybb->update_avatar( "", $id );
+				// DLE - MyBB - Avatar 3
+			}
+]]></add>
+		</operation>
+		<operation>
+			<ignoreif><![CDATA[// DLE - MyBB - Avatar 4]]></ignoreif>
+			<search position="after"><![CDATA[$db->query( "UPDATE " . USERPREFIX . "_users SET foto='{$foto_name}' WHERE user_id = '{$id}'" );]]></search>
+			<add><![CDATA[
+							// DLE - MyBB - Avatar 4
+							require_once ENGINE_DIR . '/classes/mybb.class.php';
+							$mybb->update_avatar( $foto_name, $id );
+							// DLE - MyBB - Avatar 4
+]]></add>
+		</operation>
+
+		<operation>
+			<ignoreif><![CDATA[// DLE - MyBB - Avatar 5]]></ignoreif>
+			<search position="after" index="2"><![CDATA[$db->query( "UPDATE " . USERPREFIX . "_users set foto='' WHERE user_id = '{$id}'" );]]></search>
+			<add><![CDATA[
+			// DLE - MyBB - Avatar 5
+			require_once ENGINE_DIR . '/classes/mybb.class.php';
+			$mybb->update_avatar( "", $id );
+			// DLE - MyBB - Avatar 5
+]]></add>
+		</operation>
+
+
+
+		<operation>
+			<ignoreif><![CDATA['editpass'	=> md5($password1)]]></ignoreif>
+			<search position="before"><![CDATA[$password1 = md5( md5( $password1 ) );]]></search>
+			<add><![CDATA[
+// DLE - MyBB
+			$user_array = array(
+				'editpass'	=> md5($password1),
+				'email' 	=> $email,
+				'usertitle'	=> $fullname,
+				'signature' => $signature,
+			);
+// DLE - MyBB]]></add>
+		</operation>
+		<operation>
+			<ignoreif><![CDATA['usertitle'	=> $fullname,]]></ignoreif>
+			<search position="before"><![CDATA[$sql_user = "UPDATE " . USERPREFIX . "_users SET fullname='$fullname', land='$land',{$mailchange} info='$info', signature='$signature', allow_mail='$allow_mail', xfields='$filecontents', allowed_ip='$allowed_ip' WHERE user_id = '{$id}'";]]></search>
+			<add><![CDATA[
+// DLE - MyBB
+			$user_array = array(
+				'email' 	=> $email,
+				'usertitle'	=> $fullname,
+				'signature' => $signature,
+			);
+// DLE - MyBB]]></add>
+		</operation>
+		<operation>
+			<ignoreif><![CDATA[$mybb->update_user($user_array, $id);]]></ignoreif>
+			<search position="after"><![CDATA[$db->query( $sql_user );]]></search>
+			<add><![CDATA[
+// DLE - MyBB
+		require_once ENGINE_DIR . '/classes/mybb.class.php';
+		$mybb->update_user($user_array, $id);
+		unset($user_array);
+// DLE - MyBB]]></add>
+		</operation>
+		<operation>
+			<ignoreif><![CDATA[$tpl->set( '{forum-posts}', $mybb->get_posts($row['user_id']) );]]></ignoreif>
+			<search position="before"><![CDATA[if( $row['fullname'] ) {]]></search>
+			<add><![CDATA[
+// DLE - MyBB
+		include_once ENGINE_DIR . '/classes/mybb.class.php';
+		$tpl->set( '{forum-reputations}', $mybb->get_reputations($row['user_id']) );
+		$tpl->set( '{forum-threads}', $mybb->get_threads($row['user_id']) );
+		$tpl->set( '{forum-posts}', $mybb->get_posts($row['user_id']) );
+// DLE - MyBB]]></add>
+		</operation>
+	</file>
+	<file name="engine/modules/sitelogin.php">
+		<operation>
+			<ignoreif><![CDATA[$mybb->logout]]></ignoreif>
+			<search position="after"><![CDATA[if( isset( $_REQUEST['action'] ) and $_REQUEST['action'] == "logout" ) {]]></search>
+			<add><![CDATA[
+// DLE - MyBB
+	require_once ENGINE_DIR . '/classes/mybb.class.php';
+	$mybb->logout( intval($_SESSION['dle_user_id']), $_SERVER['REMOTE_ADDR'] );
+// DLE - MyBB]]></add>
+		</operation>
+		<operation>
+			<ignoreif><![CDATA[$mybb->login]]></ignoreif>
+			<search position="after"><![CDATA[$member_id['lastdate'] = $_TIME;]]></search>
+			<add><![CDATA[
+// DLE - MyBB
+			require_once ENGINE_DIR . '/classes/mybb.class.php';
+			$mybb->login("", intval($member_id['user_id']), $_TIME );
+// DLE - MyBB]]></add>
+		</operation>
+	</file>
+	<file name="engine/modules/addnews.php">
+		<operation>
+			<ignoreif><![CDATA[$mybb->add_thread]]></ignoreif>
+			<search position="after"><![CDATA[$row['id'] = $db->insert_id();]]></search>
+			<add><![CDATA[
+// DLE - MyBB
+				require_once ENGINE_DIR . '/classes/mybb.class.php';
+				if ($_POST['add_to_forum']) {
+					$forumc = ($mybb->conf['add_sstory']) ? $_POST['short_story'] : $_POST['full_story'];
+					$fcat_id = explode(",", strval($category_list));
+					$posting_array = array (
+						'forumid'		=> strval($fcat_id['0']),
+						'subject'		=> $title,
+						'user_id'		=> intval($member_id['user_id']),
+						'addtime'		=> $added_time,
+						'user_name'		=> $member_id['name'],
+						'post'			=> $parse->process( $forumc ),
+						'ip'			=> $_SERVER['REMOTE_ADDR'],
+					);
+					$mybb->add_thread($posting_array);
+					unset($fcat_id, $forumc, $posting_array);
+				}
+// DLE - MyBB]]></add>
+		</operation>
+	</file>
+	<file name="engine/inc/editusers.php">
+		<operation>
+			<ignoreif><![CDATA[$mybb->add_user($user_array, $count = True, $login = False, $self = False);]]></ignoreif>
+			<search position="after"><![CDATA[$db->query( "INSERT INTO " . USERPREFIX . "_users (name, password, email, user_group, reg_date, lastdate, info, signature, favorites, xfields) values ('$regusername', '$regpassword', '$regemail', '$reglevel', '$add_time', '$add_time','','','','')" );]]></search>
+			<add><![CDATA[
+// DLE - MyBB
+	$db->free();
+	$row = $db->super_query( "SELECT user_id FROM " . USERPREFIX . "_users WHERE email = '$regemail'" );
+	if ($row['user_id']) {
+		require_once ENGINE_DIR . '/classes/mybb.class.php';
+		$user_array = array(
+			'uid'              	=>	$row['user_id'],
+			'username'			=>	$regusername,
+			'email' 			=>	$regemail,
+			'regdate' 			=> 	$add_time,
+			'lastvisit' 		=> 	$add_time,
+			'usergroup'		 	=>	$reglevel,
+			'regpass'			=>	md5( $_POST['regpassword'] ),
+			'avatar'			=>	$config['http_home_url']."templates/".$config['skin']."/dleimages/noavatar.png",
+		);
+		$mybb->add_user($user_array, $count = True, $login = False, $self = False);
+		unset($user_array);
+	}
+// DLE - MyBB]]></add>
+		</operation>
+		<operation>
+			<ignoreif><![CDATA[$user_array = array();]]></ignoreif>
+			<search position="before"><![CDATA[if( is_uploaded_file( $image ) ) {]]></search>
+			<add><![CDATA[
+// DLE - MyBB
+	require_once ENGINE_DIR . '/classes/mybb.class.php';
+	$user_array = array();
+// DLE - MyBB]]></add>
+		</operation>
+		<operation>
+			<ignoreif><![CDATA[$user_array['avatar'] = $config['http_home_url']."uploads/fotos/".$foto_name;]]></ignoreif>
+			<search position="before"><![CDATA[$db->query( "UPDATE " . USERPREFIX . "_users set foto='$foto_name' WHERE user_id='$id'" );]]></search>
+			<add><![CDATA[
+// DLE - MyBB
+					$user_array['avatar'] = $config['http_home_url']."uploads/fotos/".$foto_name;
+// DLE - MyBB]]></add>
+		</operation>
+		<operation>
+			<ignoreif><![CDATA[$user_array['avatar'] = $config['http_home_url']."templates/".$config['skin']."/dleimages/noavatar.png";]]></ignoreif>
+			<search position="after"><![CDATA[$db->query( "UPDATE " . USERPREFIX . "_users set foto='' WHERE user_id='$id'" );]]></search>
+			<add><![CDATA[
+// DLE - MyBB
+		$user_array['avatar'] = $config['http_home_url']."templates/".$config['skin']."/dleimages/noavatar.png";
+// DLE - MyBB]]></add>
+		</operation>
+		<operation>
+			<ignoreif><![CDATA[$user_array['editpass'] = md5( $_POST['editpass'] );]]></ignoreif>
+			<search position="after"><![CDATA[$sql_update .= ", password='$editpass'";]]></search>
+			<add><![CDATA[
+// DLE - MyBB
+		$user_array['editpass'] = md5( $_POST['editpass'] );
+// DLE - MyBB]]></add>
+		</operation>
+		<operation>
+			<ignoreif><![CDATA[$mybb->add_banned_user($userb_array, $id);]]></ignoreif>
+			<search position="before" index="1"><![CDATA[@unlink( ENGINE_DIR . '/cache/system/banned.php' );]]></search>
+			<add><![CDATA[
+// DLE - MyBB
+		require_once ENGINE_DIR . "/classes/mybb.class.php";
+		list($ugroup, $dgroup) = $mybb->get_user_group($id);
+		$userb_array = array(
+			'dateline'			=> time(),
+			'reason'			=> $banned_descr,
+			'lifted'			=> strval($this_time),
+			'bantime'			=> "---",
+			'admin'				=> 1,
+			'oldgroup'			=> $ugroup,
+			'olddisplaygroup' 	=> $dgroup,
+		);
+		$mybb->add_banned_user($userb_array, $id);
+		unset($userb_array, $ugroup, $dgroup);
+// DLE - MyBB]]></add>
+		</operation>
+		<operation>
+			<ignoreif><![CDATA[$mybb->delete_banned_user($id);]]></ignoreif>
+			<search position="before"><![CDATA[$db->query( "DELETE FROM " . USERPREFIX . "_banned WHERE users_id = '$id'" );]]></search>
+			<add><![CDATA[
+// DLE - MyBB
+		require_once ENGINE_DIR . "/classes/mybb.class.php";
+		$mybb->delete_banned_user($id);
+// DLE - MyBB]]></add>
+		</operation>
+		<operation>
+			<ignoreif><![CDATA[$mybb->delete_user($row['user_id']);]]></ignoreif>
+			<search position="before"><![CDATA[$db->query( "delete FROM " . USERPREFIX . "_pm WHERE user='$id'" );]]></search>
+			<add><![CDATA[
+// DLE - MyBB
+	require_once ENGINE_DIR . "/classes/mybb.class.php";
+	$mybb->delete_user($row['user_id']);
+// DLE - MyBB]]></add>
+		</operation>
+	</file>
+	<file name="engine/inc/mass_user_actions.php">
+		<operation>
+			<ignoreif><![CDATA[// require for action:mass_delete]]></ignoreif>
+			<search position="before"><![CDATA[if( $_POST['action'] == "mass_delete" ) {]]></search>
+			<add><![CDATA[
+// DLE - MyBB
+require_once ENGINE_DIR . "/classes/mybb.class.php";
+// require for action:mass_delete
+// DLE - MyBB]]></add>
+		</operation>
+		<operation>
+			<ignoreif><![CDATA[$mybb->delete_user($id);]]></ignoreif>
+			<search position="before"><![CDATA[$deleted ++;]]></search>
+			<add><![CDATA[
+// DLE - MyBB
+		$mybb->delete_user($id);
+// DLE - MyBB]]></add>
+		</operation>
+		<operation>
+			<ignoreif><![CDATA[$mybb->update_user]]></ignoreif>
+			<search position="before"><![CDATA[$db->query( "UPDATE " . USERPREFIX . "_users SET user_group='$editlevel', time_limit='$time_limit' WHERE user_id ='$id'" );]]></search>
+			<add><![CDATA[
+// DLE - MyBB
+		$mybb->update_user( array('usergroup' => $editlevel), $id, $self = False, $admin = False);
+// DLE - MyBB]]></add>
+		</operation>
+		<operation>
+			<ignoreif><![CDATA[$mybb->add_banned_user]]></ignoreif>
+			<search position="before"><![CDATA[$db->query( "UPDATE " . USERPREFIX . "_users SET banned='yes' WHERE user_id ='$id'" );]]></search>
+			<add><![CDATA[
+// DLE - MyBB
+		list($ugroup, $dgroup) = $mybb->get_user_group($id);
+		$userb_array = array(
+			'dateline'			=> time(),
+			'reason'			=> $banned_descr,
+			'lifted'			=> strval($this_time),
+			'bantime'			=> "---",
+			'admin'				=> 1,
+			'oldgroup'			=> $ugroup,
+			'olddisplaygroup' 	=> $dgroup,
+		);
+		$mybb->add_banned_user($userb_array, $id);
+		unset($userb_array, $ugroup, $dgroup);
+// DLE - MyBB]]></add>
+		</operation>
+	</file>
+	<file name="engine/ajax/sitemap.php">
+		<operation>
+			<ignoreif><![CDATA[require_once ENGINE_DIR.'/data/mybb.conf.php';]]></ignoreif>
+			<search position="before"><![CDATA[echo $buffer;]]></search>
+			<add><![CDATA[
+// DLE - MyBB
+require_once ENGINE_DIR.'/data/mybb.conf.php';
+$fids = implode(",", unserialize(str_replace("'",'"',$mws_mybb['map_forums']))) . "&limit=50";
+$forum_link = $mws_mybb['forum_url']."syndication.php?fid=" . $fids;
+if (strpos ( send_url("http://google.com/webmasters/sitemaps/ping?sitemap=", $forum_link), "successfully added" ) !== false) {$buffer .= "".$lang['sitemap_send']." Google: ".$lang['nl_finish']." (Forum)";}
+else {$buffer .= "".$lang['sitemap_send']." Google: ".$lang['nl_error']." URL: <a href=\"http://google.com/webmasters/sitemaps/ping?sitemap=".urlencode($forum_link)."\" target=\"_blank\">http://google.com/webmasters/sitemaps/ping?sitemap={$forum_link}</a> (Forum)";}
+if (strpos ( send_url("http://ping.blogs.yandex.ru/ping?sitemap=", $forum_link), "OK" ) !== false) {$buffer .= "".$lang['sitemap_send']." Yandex: ".$lang['nl_finish']." (Forum)";}
+else {$buffer .= "".$lang['sitemap_send']." Yandex: ".$lang['nl_error']." URL: <a href=\"http://ping.blogs.yandex.ru/ping?sitemap=".urlencode($forum_link)."\" target=\"_blank\">http://ping.blogs.yandex.ru/ping?sitemap={$forum_link}</a> (Forum)";}
+send_url("http://www.bing.com/webmaster/ping.aspx?siteMap=", $forum_link);
+$buffer .= "".$lang['sitemap_send']." Bing: ".$lang['nl_finish']." (Forum)";
+if (strpos ( send_url("http://rpc.weblogs.com/pingSiteForm?name=InfraBlog&url=", $forum_link), "Thanks for the ping" ) !== false) {$buffer .= "".$lang['sitemap_send']." Weblogs: ".$lang['nl_finish']." (Forum)";}
+else {$buffer .= "".$lang['sitemap_send']." Weblogs: ".$lang['nl_error']." URL: <a href=\"http://rpc.weblogs.com/pingSiteForm?name=InfraBlog&url=".urlencode($forum_link)."\" target=\"_blank\">http://rpc.weblogs.com/pingSiteForm?name=InfraBlog&url={$forum_link}</a> (Forum)";}
+unset($fids, $forum_link);
+// DLE - MyBB
+]]></add>
+		</operation>
+	</file>
+	<file name="forum/inc/functions_user.php">
+		<operation>
+			<ignoreif><![CDATA[$password = md5($password);]]></ignoreif>
+			<search position="replace"><![CDATA[return md5(md5($salt).$password);]]></search>
+			<add><![CDATA[
+	// DLE - start
+	$password = md5($password);
+	// DLE - end
+	return md5(md5($salt).$password);
+]]></add>
+		</operation>
+		<operation>
+			<ignoreif><![CDATA[$password = md5( $password );]]></ignoreif>
+			<search position="replace"><![CDATA[$hash = md5(md5($salt).md5($password));]]></search>
+			<add><![CDATA[
+	// DLE - start
+	$password = md5( $password );
+	// DLE - end
+	$hash = md5(md5($salt).md5($password));
+]]></add>
+		</operation>
+	</file>
+</modification>
